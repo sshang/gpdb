@@ -147,26 +147,26 @@ public class TestConnectorUtil  {
 		} catch (URISyntaxException e) {
 			fail(e.getMessage());
 		}
-    }
+	}
 
-    /*
-     * test avro short support
-     */
-    @Test
-    public void test_avro_short() {
-    	int hadoopPort = cluster.getNameNodePort();
+	/*
+	 * test avro short support
+	 */
+	@Test
+	public void test_avro_short() {
+		int hadoopPort = cluster.getNameNodePort();
 
-        Configuration conf = new Configuration();
-        conf.addResource("hdfs-site.xml");
+		Configuration conf = new Configuration();
+		conf.addResource("hdfs-site.xml");
 
-        try {
-	        URI uri = new URI("gphdfs://localhost:" + hadoopPort + "/tmp/short.avro");
-		    ConnectorUtil.setHadoopFSURI(conf, uri, "gphdfs");
+		try {
+			URI uri = new URI("gphdfs://localhost:" + hadoopPort + "/tmp/short.avro");
+			ConnectorUtil.setHadoopFSURI(conf, uri, "gphdfs");
 
-	    	ByteArrayOutputStream bout = new ByteArrayOutputStream();
-	    	List<ColumnSchema> columns = new ArrayList<ColumnSchema>();
-	    	columns.add(new ColumnSchema("c1", GPDBWritable.SMALLINT, 1, 1, ','));
-	    	AvroFileReader aReader = new AvroFileReader(conf, 0, 1, uri.getPath(), columns, null, false, false, bout);
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			List<ColumnSchema> columns = new ArrayList<ColumnSchema>();
+			columns.add(new ColumnSchema("c1", GPDBWritable.SMALLINT, 1, 1, ','));
+			AvroFileReader aReader = new AvroFileReader(conf, 0, 1, uri.getPath(), columns, null, false, false, bout);
 
 			aReader.readAvroFormat();
 
